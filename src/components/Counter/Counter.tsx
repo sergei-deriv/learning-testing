@@ -6,9 +6,9 @@ export function Counter({ defaultCount = 0 }: { defaultCount?: number }) {
 
   useEffect(() => {
     if (count >= 2) {
-      !bigEnough && setBigEnough(true);
+      !bigEnough && setTimeout(() => setBigEnough(true), 300);
     } else {
-      bigEnough && setBigEnough(false);
+      bigEnough && setTimeout(() => setBigEnough(false), 300);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);

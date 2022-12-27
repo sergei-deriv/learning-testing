@@ -7,17 +7,18 @@ export function Counter({ defaultCount = 0 }: { defaultCount?: number }) {
   const [bigEnough, setBigEnough] = useState(defaultCount >= tooBigNumber);
 
   useEffect(() => {
-    // let id: NodeJS.Timeout;
+    let id: NodeJS.Timeout;
 
     if (count >= tooBigNumber && !bigEnough) {
-      //   id = setTimeout(() => setBigEnough(true), 300);
-      setTimeout(() => setBigEnough(true), 300);
+      id = setTimeout(() => setBigEnough(true), 300);
+      //   setTimeout(() => setBigEnough(true), 300);
     } else if (count < tooBigNumber && bigEnough) {
-      //   id = setTimeout(() => setBigEnough(false), 300);
-      setTimeout(() => setBigEnough(false), 300);
+      id = setTimeout(() => setBigEnough(false), 300);
+      //   setTimeout(() => setBigEnough(false), 300);
     }
 
-    // return () => clearTimeout(id);
+    return () => clearTimeout(id);
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 

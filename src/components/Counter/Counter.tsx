@@ -6,8 +6,16 @@ export function Counter() {
   return (
     <div>
       <h1>Count: {count}</h1>
-      <button onClick={() => setCount(count + 1)}>inc</button>
-      <button onClick={() => setCount(count - 1)}>dec</button>
+      <button
+        onClick={() => setTimeout(() => setCount((count) => count + 1), 200)}
+      >
+        inc
+      </button>
+      <button
+        onClick={() => setTimeout(() => setCount((count) => count - 1), 200)}
+      >
+        dec
+      </button>
     </div>
   );
 }

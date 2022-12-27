@@ -1,15 +1,24 @@
 import { useEffect, useState } from 'react';
+import { clearTimeout } from 'timers';
 
 export function Counter({ defaultCount = 0 }: { defaultCount?: number }) {
   const [count, setCount] = useState(defaultCount);
   const [bigEnough, setBigEnough] = useState(defaultCount >= 2);
 
   useEffect(() => {
+    let timeout_id: NodeJS.Timeout;
+
     if (count >= 2) {
-      !bigEnough && setTimeout(() => setBigEnough(true), 300);
+      if (!bigEnough) {
+        timeout_id = setTimeout(() => setBigEnough(true), 300);
+      }
     } else {
-      bigEnough && setTimeout(() => setBigEnough(false), 300);
+      if (bigEnough) {
+        timeout_id = setTimeout(() => setBigEnough(false), 300);
+      }
     }
+
+    return () => clearTimeout(timeout_id);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [count]);
 

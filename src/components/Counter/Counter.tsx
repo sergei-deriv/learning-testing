@@ -1,7 +1,17 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
-export function Counter() {
-  const [count, setCount] = useState(0);
+export function Counter({ defaultCount = 0 }: { defaultCount?: number }) {
+  const [count, setCount] = useState(defaultCount);
+  const [bigEnough, setBigEnough] = useState(defaultCount >= 2);
+
+  useEffect(() => {
+    if (count >= 2) {
+      !bigEnough && setBigEnough(true);
+    } else {
+      bigEnough && setBigEnough(false);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [count]);
 
   return (
     <div>
@@ -16,6 +26,8 @@ export function Counter() {
       >
         dec
       </button>
+
+      {!bigEnough && <div>I am too small</div>}
     </div>
   );
 }

@@ -1,9 +1,14 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react';
+import {
+  render,
+  screen,
+  /*fireEvent,*/ waitFor,
+  waitForElementToBeRemoved,
+} from '@testing-library/react';
 import { Counter } from './Counter';
 import userEvent from '@testing-library/user-event';
 
 describe('counter test', () => {
-  const setup = () => render(<Counter />);
+  const setup = (def?: number) => render(<Counter defaultCount={def} />);
 
   //   beforeEach(() => {});
 
@@ -35,5 +40,15 @@ describe('counter test', () => {
     // fireEvent.click(screen.getByRole('button', { name: /dec/ }));
     await userEvent.click(screen.getByRole('button', { name: /dec/ }));
     await waitFor(() => expect(count.textContent).toBe('Count: -1'));
+  });
+
+  it('renders too big, and will disappear after 300 ms', async () => {
+    setup();
+    // click 2 times
+    for (let index = 0; index < 2; index++) {
+      userEvent.click(screen.getByRole('button', { name: /inc/ }));
+    }
+
+    await waitForElementToBeRemoved(() => screen.queryByText(/I am too small/));
   });
 });
